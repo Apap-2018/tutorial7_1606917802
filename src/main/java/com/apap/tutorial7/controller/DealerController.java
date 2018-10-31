@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 import com.apap.tutorial7.model.*;
+import com.apap.tutorial7.rest.DealerDetail;
+import com.apap.tutorial7.rest.Setting;
 import com.apap.tutorial7.service.*;
 //import com.apap.tutorial7.rest.DealerDetail;
 //import com.apap.tutorial7.rest.Setting;
@@ -64,5 +66,19 @@ public class DealerController {
 	@GetMapping()
 	private List<DealerModel> viewAllDealer(Model model){
 		return dealerService.getAllDealer();
+	}
+	
+	@GetMapping(value = "/status/{dealerId}")
+	private String getStatus(@PathVariable ("dealerId") long dealerId) throws Exception {
+		String path = Setting.dealerUrl + "/dealer?id=" + dealerId;
+		return restTemplate.getForEntity(path, String.class).getBody();
+	}
+	
+	@GetMapping(value = "/full/{dealerId}")
+	private DealerDetail postStatus(@PathVariable ("dealerId") long dealerId) throws Exception {
+		String path = Setting.dealerUrl + "/dealer";
+		DealerModel dealer = dealerService.getDealerDetailById(dealerId).get();
+		DealerDetail detail = restTemplate.postForObject(path, dealer, DealerDetail.class);
+		return detail;
 	}
 }
