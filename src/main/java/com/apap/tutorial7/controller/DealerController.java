@@ -24,6 +24,14 @@ public class DealerController {
 	@Autowired
 	private DealerService dealerService;
 	
+	@Autowired
+	RestTemplate restTemplate;
+	
+	@Bean
+	public RestTemplate rest() {
+		return new RestTemplate();
+	}
+	
 	@PostMapping(value = "/add")
 	private DealerModel addDealerSubmit(@RequestBody DealerModel dealer) {
 		return dealerService.addDealer(dealer);

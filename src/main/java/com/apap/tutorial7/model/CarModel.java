@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "car")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CarModel implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,7 +47,7 @@ public class CarModel implements Serializable{
 	@Column(name = "amount", nullable = false)
 	private String amount;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="dealer_id", referencedColumnName="id", nullable= false)
 	@OnDelete(action=OnDeleteAction.NO_ACTION)
 	@JsonIgnoreProperties(ignoreUnknown = true)
